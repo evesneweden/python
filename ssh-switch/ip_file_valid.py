@@ -1,5 +1,5 @@
-import os.path #use this function so you can utilize paths of the OS in python
-import sys #system-specifc parameter and functions such as sys.exit()
+import os.path 
+import sys
 
 #Chek the IP address file and content validity
 def ip_file_valid():
@@ -13,7 +13,7 @@ def ip_file_valid():
 
     else:
         print("\n* File {} does not exist. Please check and try again.\n".format(ip_file))
-        sys.exit() 
+        sys.exit()
 	#Whatever filename you passed to the ip_file variable gets substituted in the using the format function
 
     #OPen user selected file for reading

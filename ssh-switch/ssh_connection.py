@@ -96,7 +96,8 @@ def ssh_connection(ip):
             print("\nDone for device {}\n".format(ip))
 
         #Test for reading command output
-        print(str(router_output) + "\n")
+        #print(re.findall(r"[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}", str(router_output))[1])
+        #print(str(router_output) + "\n")
 
         #Close session
         session.close()
