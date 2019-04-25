@@ -1,8 +1,7 @@
-#Network Application meant to connect to Arista Network Devices and read/configure/reconfigure switch configurations
-
-#Uses three files:
-##IP file: list of IPS for the switches
-##Command file: list of commands to send to switches
-##username file: for username credentials to login to the switches
+# python
+# This project is meant to send command line configs to switches using 3 Files: 
+## IP file: containing list of the switches IPs
+## config file: containing line by line list of command line configs for the switches
+## user file: containg credentials for users
 
 
