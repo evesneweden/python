@@ -1,24 +1,40 @@
 import random #generates pseudo random numbers.
 import sys
 import ipaddress
+import numpy
 
-
-#Checking IP address validity
 while True:
     ip_address = input("Enter an IP address: ")
+    valid_address = ipaddress.ip_interface(ip_address)
+    loopback = valid_address.ip.is_loopback
+    private = valid_address.network.is_private
+    multi_cast = valid_address.ip.is_multicast
+    if loopback: print('\n* The address you provided: {} is the loopback!. Try again'.format(valid_address))
+    elif private: print('\n* The address you provided: {} is a private IP. Try again'.format(valid_address))
+    elif multi_cast: print('\n* The address you provided: {} is a multicast address! Try again'.format(valid_address))
+    else: print('\n* Here is the IP address you gave: {}. Lets convert to binary!\n'.format(valid_address)); break
+    mask_octets_binary = []
+    binary_octet = bin(int(valid_address)).lstrip('0b')
+    mask_octets_binary.append(binary_octet.zfill(8))
+    print("The IP Address you gave in Binary is {}\n".format(mask_octets_binary))
 
-    #Lets split the IP address up by a period for now so we can check each number in the octect individually
-    ip_octects = ip_address.split('.')
-    #This will fail because we are splitting the IP and the ip address is checking for validity of the IP!
-    valid_address = ipaddress.ip_interface(ip_octects)
-    #binary version of the ip ip_address
-    ipv4_address = ipaddress_IPv4Address(valid_address)
-    binary_address = ipv4_address.packed
-    # Check if the address entered is reserved, loopback, or is a multicast address. If they arent, break out of loop.
-    if valid_address.network.is_reserved == False or valid_address.ip.is_loopback == False or valid_address.ip.is_multicast == False:
-        break
-    else:
-        print('\n* You did not give a proper IP address: {}. Please check and try again.\n'.format(valid_address))
-        continue
 
-    binary_address = ipaddress_IPv4Address(valid_address)
+###TEST CODE
+while True:
+    ip_address = input("Enter an IP address: ")
+    valid_address = ipaddress.ip_interface(ip_address)
+    split_ip = ip_address.split(".")
+    mask_octets_binary = []
+    binary_octet = bin(int(split_ip[0])).lstrip('0b')
+    mask_octets_binary.append(binary_octet.zfill(8))
+    print(mask_octets_binary)
+    loopback = valid_address.ip.is_loopback
+    private = valid_address.network.is_private
+    multi_cast = valid_address.ip.is_multicast
+    if loopback: print('\n* The address you provided: {} is the loopback!. Try again'.format(valid_address))
+    elif private: print('\n* The address you provided: {} is a private IP. Try again'.format(valid_address))
+    elif multi_cast: print('\n* The address you provided: {} is a multicast address! Try again'.format(valid_address))
+    else: print('\n* Here is the IP address you gave: {}. Lets convert to binary!\n'.format(valid_address)); break
+
+    print(numpy.count_nonzero(mask_octets_binary))
+    print("The IP Address you gave in Binary is {}\n".format(mask_octets_binary))
