@@ -23,11 +23,27 @@ while True:
 while True:
     ip_address = input("Enter an IP address: ")
     valid_address = ipaddress.ip_interface(ip_address)
-    split_ip = ip_address.split(".")
+    no_subnet = ip_address.split("/")
+    split_ip = no_subnet[0]
+    octet_array = split_ip.split(".")
+    print(octet_array)
+    print(valid_address)
+    no_cidr_ip = no_subnet[0]
+    print(no_subnet)
+    print(no_cidr_ip)
     mask_octets_binary = []
-    binary_octet = bin(int(split_ip[0])).lstrip('0b')
-    mask_octets_binary.append(binary_octet.zfill(8))
-    print(mask_octets_binary)
+    for octet in no_subnet:
+        mask_octets_binary.append(bin(int(octet)).lstrip('0b').zfill(8))
+    binary_mask = "".join(mask_octets_binary)
+    no_of_zeros = binary_mask.count("0")
+    no_of_ones = 32 - no_of_zeros
+    no_of_hosts = abs(2 ** no_of_ones - 2)
+    print(no_of_hosts)
+    print(binary_mask)
+    print(no_of_zeros)
+
+    print("The IP Address you gave in Binary is {}\n".format(mask_octets_binary))
+    print(numpy.count_nonzero(mask_octets_binary))
     loopback = valid_address.ip.is_loopback
     private = valid_address.network.is_private
     multi_cast = valid_address.ip.is_multicast
